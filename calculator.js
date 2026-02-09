@@ -458,6 +458,7 @@ window.calculateRisk = function() {
 
     updateRiskUI(probability * 100);
     updateChartUI(contributions);
+    updateHeatmapWithContributions(contributions, probability * 100);
 };
 
 // ============================================
@@ -613,25 +614,42 @@ function updateRiskUI(percentage) {
 }
 
 function updateHeatmap(risk) {
+    // Legacy function - now handled by updateHeatmapWithContributions
+}
+
+function updateHeatmapWithContributions(contributions, risk) {
     const pointer = document.getElementById('heatmap-pointer');
     if (!pointer) return;
     
-    // Get current glucose value
-    const fastGlu = parseFloat(document.getElementById('fastGlu-value').value) || 90;
+    // X-Axis: Glucose contribution (how much glucose adds to risk vs mean)
+    // Positive contribution = higher glucose = move right
+    // Negative contribution = lower glucose = move left
+    const gluContribution = contributions.fastGlu;
     
-    // Calculate position
-    const maxRisk = 75;
-    const minGlu = state.useMetric ? 2.8 : 50;
-    const maxGlu = state.useMetric ? 8.3 : 150;
+    // Y-Axis: Sum of ALL OTHER risk contributions (excluding glucose)
+    const otherContributions = 
+        contributions.age + 
+        contributions.race + 
+        contributions.parentHist + 
+        contributions.sbp + 
+        contributions.waist + 
+        contributions.height + 
+        contributions.cholHDL + 
+        contributions.cholTri;
     
-    // Clamp values
-    const clampedRisk = Math.min(Math.max(risk, 0), maxRisk);
-    const clampedGlu = Math.min(Math.max(fastGlu, minGlu), maxGlu);
+    // Scale X: Glucose contribution typically ranges from -4 to +4
+    // Map this to 5-95% horizontally
+    const gluMin = -4;
+    const gluMax = 4;
+    const clampedGlu = Math.min(Math.max(gluContribution, gluMin), gluMax);
+    const xPercent = 5 + ((clampedGlu - gluMin) / (gluMax - gluMin)) * 90;
     
-    // Calculate percentages (x from left, y from bottom)
-    // Clamp to keep heart icon visible (5% margin on each side)
-    const xPercent = Math.min(Math.max(((clampedGlu - minGlu) / (maxGlu - minGlu)) * 100, 5), 95);
-    const yPercent = Math.min(Math.max((clampedRisk / maxRisk) * 100, 5), 95);
+    // Scale Y: Other contributions typically range from -3 to +3
+    // Map this to 5-95% vertically (bottom to top)
+    const otherMin = -3;
+    const otherMax = 3;
+    const clampedOther = Math.min(Math.max(otherContributions, otherMin), otherMax);
+    const yPercent = 5 + ((clampedOther - otherMin) / (otherMax - otherMin)) * 90;
     
     pointer.style.left = xPercent + '%';
     pointer.style.bottom = yPercent + '%';
