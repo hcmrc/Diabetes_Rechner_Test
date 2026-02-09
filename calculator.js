@@ -65,7 +65,7 @@ const CONFIG = {
         waist: 'Waist Size',
         height: 'Height',
         fastGlu: 'Glucose',
-        cholHDL: 'HDL Chol',
+        cholHDL: 'HDL Cholesterol',
         cholTri: 'Triglycerides'
     },
 
