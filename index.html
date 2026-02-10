@@ -118,15 +118,15 @@
                 <div class="input-group">
                     <label class="input-label">Waist Circumference <span class="unit-label" id="waist-unit">(inches)</span></label>
                     <div class="slider-container">
-                        <input type="range" id="waist-slider" min="25" max="50" value="35" step="1" class="slider slider-waist" oninput="updateValue('waist')">
+                        <input type="range" id="waist-slider" min="25" max="60" value="35" step="1" class="slider slider-waist" oninput="updateValue('waist')">
                         <div class="slider-track slider-track-waist">
-                            <div class="slider-segment safe" style="flex: 15"></div>
-                            <div class="slider-segment danger" style="flex: 10"></div>
+                            <div class="slider-segment safe" style="flex: 12"></div>
+                            <div class="slider-segment danger" style="flex: 23"></div>
                         </div>
                         <div class="slider-labels">
                             <span id="waist-min">25</span>
-                            <span id="waist-mid">40</span>
-                            <span id="waist-max">50</span>
+                            <span id="waist-mid">42</span>
+                            <span id="waist-max">60</span>
                         </div>
                     </div>
                     <div class="value-display">
@@ -144,12 +144,12 @@
                 <div class="input-group">
                     <label class="input-label">Systolic Blood Pressure (SBP) <span class="unit-label">(mmHg)</span></label>
                     <div class="slider-container">
-                        <input type="range" id="sbp-slider" min="100" max="180" value="120" class="slider slider-bp" oninput="updateValue('sbp')">
+                        <input type="range" id="sbp-slider" min="90" max="200" value="120" class="slider slider-bp" oninput="updateValue('sbp')">
                         <div class="slider-track slider-track-bp">
-                            <div class="slider-segment safe" style="flex: 1"></div>
-                            <div class="slider-segment alert" style="flex: 1"></div>
-                            <div class="slider-segment warning" style="flex: 1"></div>
-                            <div class="slider-segment danger" style="flex: 1"></div>
+                            <div class="slider-segment safe" style="flex: 30"></div>
+                            <div class="slider-segment alert" style="flex: 20"></div>
+                            <div class="slider-segment warning" style="flex: 20"></div>
+                            <div class="slider-segment danger" style="flex: 40"></div>
                         </div>
                         <div class="slider-labels slider-labels-bp">
                             <span>Normal</span>
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                     <div class="value-display">
-                        <input type="number" id="sbp-value" value="120" min="100" max="180" onchange="updateSlider('sbp')">
+                        <input type="number" id="sbp-value" value="120" min="90" max="200" onchange="updateSlider('sbp')">
                         <span class="value-unit">mmHg</span>
                     </div>
                 </div>
@@ -173,11 +173,11 @@
                 <div class="input-group">
                     <label class="input-label">Fasting Glucose <span class="unit-label" id="fastGlu-unit">(mg/dL)</span></label>
                     <div class="slider-container">
-                        <input type="range" id="fastGlu-slider" min="50" max="150" value="90" class="slider slider-glucose" oninput="updateValue('fastGlu')">
+                        <input type="range" id="fastGlu-slider" min="50" max="300" value="90" class="slider slider-glucose" oninput="updateValue('fastGlu')">
                         <div class="slider-track slider-track-glucose">
                             <div class="slider-segment safe" style="flex: 50"></div>
-                            <div class="slider-segment alert" style="flex: 25"></div>
-                            <div class="slider-segment danger" style="flex: 25"></div>
+                            <div class="slider-segment alert" style="flex: 26"></div>
+                            <div class="slider-segment danger" style="flex: 174"></div>
                         </div>
                         <div class="slider-labels slider-labels-glucose">
                             <span>Normal</span>
@@ -194,9 +194,9 @@
                 <div class="input-group">
                     <label class="input-label">HDL Cholesterol (Good) <span class="unit-label" id="cholHDL-unit">(mg/dL)</span></label>
                     <div class="slider-container">
-                        <input type="range" id="cholHDL-slider" min="30" max="100" value="50" class="slider slider-hdl" oninput="updateValue('cholHDL')">
+                        <input type="range" id="cholHDL-slider" min="20" max="100" value="50" class="slider slider-hdl" oninput="updateValue('cholHDL')">
                         <div class="slider-track slider-track-hdl">
-                            <div class="slider-segment danger" style="flex: 10"></div>
+                            <div class="slider-segment danger" style="flex: 20"></div>
                             <div class="slider-segment alert" style="flex: 20"></div>
                             <div class="slider-segment safe" style="flex: 40"></div>
                         </div>
@@ -215,15 +215,15 @@
                 <div class="input-group">
                     <label class="input-label">Triglycerides <span class="unit-label" id="cholTri-unit">(mg/dL)</span></label>
                     <div class="slider-container">
-                        <input type="range" id="cholTri-slider" min="100" max="500" value="150" class="slider slider-tri" oninput="updateValue('cholTri')">
+                        <input type="range" id="cholTri-slider" min="50" max="500" value="150" class="slider slider-tri" oninput="updateValue('cholTri')">
                         <div class="slider-track slider-track-tri">
-                            <div class="slider-segment safe" style="flex: 50"></div>
+                            <div class="slider-segment safe" style="flex: 100"></div>
                             <div class="slider-segment alert" style="flex: 50"></div>
                             <div class="slider-segment danger" style="flex: 300"></div>
                         </div>
                         <div class="slider-labels">
-                            <span id="cholTri-min">100</span>
-                            <span id="cholTri-mid">200</span>
+                            <span id="cholTri-min">50</span>
+                            <span id="cholTri-mid">275</span>
                             <span id="cholTri-max">500</span>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                                             <span>High glucose<br>Medical evaluation needed</span>
                                         </div>
                                         <div class="zone zone-5">
-                                            <span>High risk<br>GLP-1 agonists or SGLT2 inhibitors may be indicated</span>
+                                            <span>High risk<br>GLP-1 agonists or SGLT2 inhibitors may be indicated + Metformin and lifestyle changes</span>
                                         </div>
                                     </div>
                                     <div class="heatmap-pointer" id="heatmap-pointer">

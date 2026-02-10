@@ -65,7 +65,7 @@ const CONFIG = {
         waist: 'Waist Size',
         height: 'Height',
         fastGlu: 'Glucose',
-        cholHDL: 'HDL Cholesterol',
+        cholHDL: 'Good Cholesterol (HDL)',
         cholTri: 'Triglycerides'
     },
 
@@ -144,6 +144,9 @@ let state = {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize slider fills
+    ['age', 'sbp', 'height', 'waist', 'fastGlu', 'cholHDL', 'cholTri'].forEach(updateSliderFill);
+    
     calculateRisk();
     const unitToggle = document.getElementById('unit-toggle');
     if (unitToggle) unitToggle.addEventListener('change', toggleUnits);
@@ -270,13 +273,19 @@ function updateUnitLabels() {
         ? { h: 'cm', w: 'cm', g: 'mmol/L', c: 'mmol/L' } 
         : { h: 'in', w: 'in', g: 'mg/dL', c: 'mg/dL' };
 
+    // Header labels (with parentheses for US units)
     setUnitText('height-unit', units.h);
-    setUnitText('height-value-unit', units.h);
     setUnitText('waist-unit', units.w);
-    setUnitText('waist-value-unit', units.w);
     setUnitText('fastGlu-unit', units.g);
     setUnitText('cholHDL-unit', units.c);
     setUnitText('cholTri-unit', units.c);
+    
+    // Value display labels (without parentheses)
+    setValueUnitText('height-value-unit', units.h);
+    setValueUnitText('waist-value-unit', units.w);
+    setValueUnitText('fastGlu-value-unit', units.g);
+    setValueUnitText('cholHDL-value-unit', units.c);
+    setValueUnitText('cholTri-value-unit', units.c);
     
     // Update slider axis labels
     updateSliderAxisLabels();
@@ -319,6 +328,11 @@ function setLabelText(id, value) {
 function setUnitText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text.includes('mmol') ? text : `(${text})`;
+}
+
+function setValueUnitText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
 }
 
 function convertInputValues() {
@@ -672,13 +686,13 @@ function updateTreatmentRecommendations() {
         waist: parseFloat(document.getElementById('waist-value').value) || 0
     };
 
-    // Convert to SI if needed
+    // Convert to SI if needed (with same rounding as display conversion for consistency)
     let siVals = { ...inputs };
     if (!state.useMetric) {
-        siVals.fastGlu = inputs.fastGlu * CONFIG.CONVERSIONS.gluToMmol;
-        siVals.cholHDL = inputs.cholHDL * CONFIG.CONVERSIONS.hdlToMmol;
-        siVals.cholTri = inputs.cholTri * CONFIG.CONVERSIONS.triToMmol;
-        siVals.waist = inputs.waist * CONFIG.CONVERSIONS.waistToCm;
+        siVals.fastGlu = parseFloat((inputs.fastGlu * CONFIG.CONVERSIONS.gluToMmol).toFixed(1));
+        siVals.cholHDL = parseFloat((inputs.cholHDL * CONFIG.CONVERSIONS.hdlToMmol).toFixed(1));
+        siVals.cholTri = parseFloat((inputs.cholTri * CONFIG.CONVERSIONS.triToMmol).toFixed(1));
+        siVals.waist = Math.round(inputs.waist * CONFIG.CONVERSIONS.waistToCm);
     }
 
     // Determine which factors are elevated
